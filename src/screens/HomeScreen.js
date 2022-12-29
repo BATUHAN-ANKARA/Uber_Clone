@@ -1,12 +1,129 @@
 import React from 'react'
-import {View, Text, StyleSheet, Dimensions} from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  StatusBar,
+  Image,
+  FlatList,
+} from 'react-native'
 import {colors, parameters} from '../global/styles'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import MCIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import {filterData} from '../global/data'
+
 const SCREEN_WIDTH = Dimensions.get('window').width
 
 const HomeScreen = () => {
   return (
-    <View>
-      <Text>HomeScreen</Text>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.icon1}>
+          <MCIcons name='menu' color={colors.white} size={40} />
+        </View>
+      </View>
+
+      <ScrollView bounces={false}>
+        <View style={styles.home}>
+          <Text style={styles.text1}>Destress your commute</Text>
+          <View style={styles.view1}>
+            <View style={styles.view8}>
+              <Text style={styles.text2}>
+                Read a book. Take a nap. Stare out the window
+              </Text>
+
+              <View style={styles.button1}>
+                <Text style={styles.button1Text}>Ride with Uber</Text>
+              </View>
+            </View>
+            <View>
+              <Image
+                style={styles.image1}
+                source={require('../../assets/uberCar.png')}
+              />
+            </View>
+          </View>
+        </View>
+
+        <View>
+          <FlatList
+            numRows={4}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            data={filterData}
+            keyExtractor={item => item.id}
+            renderItem={({item}) => (
+              <View style={styles.card}>
+                <View style={styles.view2}>
+                  <Image style={styles.image2} source={item.image} />
+                </View>
+                <View>
+                  <Text style={styles.title}>{item.name}</Text>
+                </View>
+              </View>
+            )}
+          />
+        </View>
+
+        <View style={styles.view3}>
+          <Text style={styles.text3}>Where to?</Text>
+
+          <View style={styles.view4}>
+            <MCIcons name='clock-time-four' color={colors.grey1} size={26} />
+
+            <Text style={{marginLeft: 5}}>Now</Text>
+
+            <MCIcons name='chevron-down' color={colors.grey1} size={26} />
+          </View>
+        </View>
+        <View style={styles.view5}>
+          <View style={styles.view6}>
+            <View style={styles.view7}>
+              <MCIcons name='map-marker' color={colors.black} size={22} />
+            </View>
+            <View>
+              <Text style={{fontSize: 18, color: colors.black}}>
+                32 Olivia Rd
+              </Text>
+              <Text style={{color: colors.grey3}}>
+                Klipfontein 83-Ir, Boksburg
+              </Text>
+            </View>
+          </View>
+          <View>
+            <MCIcons name='chevron-right' color={colors.grey} size={26} />
+          </View>
+        </View>
+
+        <View style={{...styles.view5, borderBottomWidth: 0}}>
+          <View style={styles.view6}>
+            <View style={styles.view7}>
+              <MCIcons name='map-marker' color={colors.black} size={22} />
+            </View>
+            <View>
+              <Text style={{fontSize: 18, color: colors.black}}>
+                32 Olivia Rd
+              </Text>
+              <Text style={{color: colors.grey3}}>
+                Klipfontein 83-Ir, Boksburg
+              </Text>
+            </View>
+          </View>
+          <View>
+            <MCIcons name='chevron-right' color={colors.grey} size={26} />
+          </View>
+        </View>
+
+        <Text style={styles.text4}>Around You</Text>
+      </ScrollView>
+
+      <StatusBar
+        barStyle={'light-content'}
+        backgroundColor='#2058c0'
+        translucent={true}
+      />
     </View>
   )
 }
@@ -18,10 +135,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     paddingBottom: 30,
+    paddingTop: parameters.statusBarHeight,
   },
   header: {
     backgroundColor: colors.blue,
-    paddingTop: parameters.statusBarHeight,
+    //paddingTop: parameters.statusBarHeight,
     height: parameters.headerHeight,
     alignItems: 'flex-start',
   },
